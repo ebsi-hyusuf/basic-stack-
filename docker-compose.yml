@@ -1,0 +1,48 @@
+networks:
+    monitor_net:
+
+volumes:
+    grafana_data:
+    prometheus_data:
+
+services:
+
+
+blackbox:
+    image: prom/blackbox-exporter:latest
+    restart: unless-stopped
+    command:
+        -'--config.file=/etc/blackbox_exporter/config.yml'
+    volumes:
+        - ./blackbox.yml:/etc/blackbox_exporter/config.yml
+    networks:
+        - monitor_net
+    ports:
+        - "9115:9115"
+    
+grafana:
+    image: grafana/grafana:11.2.0
+    restart: unless-stopped
+    environment:
+        - GF_SECURITY_ADMIN_USER=admin
+        - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+        - grafana_data:/var/lib/grafana
+    networks:
+        - monitor_net
+    ports:
+        - "3000:3000"
+prometheus:
+    image: prom/prometheus:v2.51.2
+    restart: unless-stopped
+    command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+        - '--storage.tsdb.path=/prometheus'
+        - '--storage.tsdb.retention.time=14d'
+    volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        - prometheus_data:/prometheus
+    networks:
+        - monitor_net
+    ports:
+        - "9090:9090"
