@@ -1,46 +1,70 @@
 modules:
 
+  enspire_api_michelin:
+    prober: http
+    timeout: 10s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/2.0"]
+      valid_status_codes: [200]
+      follow_redirects: true
+      preferred_ip_protocol: ip4
+      fail_if_not_ssl: true
+      headers:
+        Referer: "https://michelin.app.enspire.com"
+        User-Agent: "empyrean-monitoring"
+      fail_if_body_not_matches_regexp: ["\"client_id\":\\s*193"]
+
+
+  enspire_api_dollargeneral:
+    prober: http
+    timeout: 10s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/2.0"]
+      valid_status_codes: [200]
+      follow_redirects: true
+      preferred_ip_protocol: ip4
+      fail_if_not_ssl: true
+      headers:
+        Referer: "https://dollargeneral.app.enspire.com"
+        User-Agent: "empyrean-monitoring"
+      fail_if_body_not_matches_regexp: ["\"client_id\":\\s*158"]
+
   enspire_api_kellanova:
-   prober: http
-   timeout: 10s
-   http:
-    method: GET
-    valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/2.0"]
-    valid_status_codes: [200]
-    follow_redirects: true
-    preferred_ip_protocol: ip4
-    fail_if_not_ssl: true
-    headers:
-      Referer: "https://kellanova.app.enspire.com"
-      User-Agent: "empyrean-monitoring"
-      fail_if_body_not_matches_regexp:
-      - "Kellanove_login_screen.jpg"
+    prober: http
+    timeout: 10s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/2.0"]
+      valid_status_codes: [200]
+      follow_redirects: true
+      preferred_ip_protocol: ip4
+      fail_if_not_ssl: true
+      headers:
+        Referer: "https://kellanova.app.enspire.com"
+        User-Agent: "empyrean-monitoring"
+      fail_if_body_not_matches_regexp: ["\"client_id\":\\s*170"]
 
 
   http_2xx:
-  prober: http
-  timeout: 5s
-  http:
-   method: GET
-   valid_http_versions: ["HTTP/1.1", "HTTP/2"]
-   valid_status_codes: [200]
-   follow_redirects: true
-   preferred_ip_protocol: ipv4
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      valid_status_codes: [200]
+      follow_redirects: true
+      preferred_ip_protocol: ip4
 
-
-  http_2xx:
-  prober: http
-  timeout: 5s
-  http:
-    method: GET
-    valid_http_versions: ["HTTP/1.1", "HTTP/2"]
-    valid_status_codes: [200]
-    follow_redirects: true
-    preferred_ip_protocol: ipv4
-    fail_if_ssl: false
-    fail_if_not_ssl: true
-    
-
-
-
-  
+  https_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      valid_status_codes: [200]
+      follow_redirects: true
+      preferred_ip_protocol: ip4
+      fail_if_ssl: false
+      fail_if_not_ssl: true

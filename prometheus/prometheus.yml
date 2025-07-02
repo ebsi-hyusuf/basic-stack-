@@ -17,6 +17,8 @@ scrape_configs:
     static_configs:
       - targets:
           - enspire_api_kellanova,api.enspire.me/v2/user/app
+          - enspire_api_dollargeneral, https://api.enspire.me/v2/user/app
+          - enspire_api_michelin, https://api.enspire.me/v2/user/app
     relabel_configs:
       - source_labels: [__address__]
         regex: (.*),.*$
