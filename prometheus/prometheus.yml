@@ -1,4 +1,6 @@
-global:
+global:  
+
+
   scrape_interval: 30s
   scrape_timeout: 30s
   evuluation_interval: 30s
@@ -19,7 +21,7 @@ scrape_configs:
     module: [http_2xx]
   static_configs:
     - targets:
-      - enspire_api_v2_user_app, https://api.enspire.me/v2/user/app?platform=web
+      - enspire_api_kellanova, https://api.enspire.me/v2/user/app
   
   relabel_configs:
       - source_labels: [__address__]
