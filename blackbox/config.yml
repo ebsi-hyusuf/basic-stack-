@@ -1,15 +1,15 @@
 modules:
 
-  enspire_api_v2_user_app:
+  enspire_api_kellanova:
    prober: http
    timeout: 10s
    http:
     method: GET
-    valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/3"]
+    valid_http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/2.0"]
     valid_status_codes: [200]
     follow_redirects: true
-    preferred_ip_protocol: "ipv4"
-    fail_if_not_ssl: false
+    preferred_ip_protocol: ip4
+    fail_if_not_ssl: true
     headers:
       Referer: "https://kellanova.app.enspire.com"
       User-Agent: "empyrean-monitoring"
@@ -37,8 +37,9 @@ modules:
     valid_status_codes: [200]
     follow_redirects: true
     preferred_ip_protocol: ipv4
+    fail_if_ssl: false
     fail_if_not_ssl: true
-    fail_if_not_ssl: true
+    
 
 
 

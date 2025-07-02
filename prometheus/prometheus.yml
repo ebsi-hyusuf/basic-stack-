@@ -1,29 +1,23 @@
-global:  
-
-
+global:
   scrape_interval: 30s
   scrape_timeout: 30s
-  evuluation_interval: 30s
-
+  evaluation_interval: 30s
 
 scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets:
+          - 'prometheus:9090'
 
-- job_name: 'prometheus'
-  static_config:
-    - targets:
-      - 'prometheus:9090'
-
-
-- job_name: "blackbox"
-  scrape_interval: 30s
-  metrics_path: '/probe'
-  params:
-    module: [http_2xx]
-  static_configs:
-    - targets:
-      - enspire_api_kellanova, https://api.enspire.me/v2/user/app
-  
-  relabel_configs:
+  - job_name: "blackbox"
+    scrape_interval: 120s
+    metrics_path: '/probe'
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - enspire_api_kellanova,api.enspire.me/v2/user/app
+    relabel_configs:
       - source_labels: [__address__]
         regex: (.*),.*$
         replacement: $1
@@ -36,5 +30,3 @@ scrape_configs:
         target_label: __param_target
       - target_label: __address__
         replacement: blackbox:9115
-
-
