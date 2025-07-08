@@ -1,0 +1,25 @@
+---
+- name: Check if Prometheus and Blackbox containers are running
+  hosts: monitoring
+  become: true
+
+  tasks:
+    - name: Check Prometheus container
+      shell: >
+        docker ps --filter "name=prometheus" --format '{{"{{"}}.Names{{"}}"}}: {{"{{"}}.Status{{"}}"}}'
+      register: prometheus_status
+      changed_when: false
+
+    - name: Show Prometheus container status
+      debug:
+        msg: "{{ prometheus_status.stdout_lines }}"
+
+    - name: Check Blackbox container
+      shell: >
+        docker ps --filter "name=blackbox" --format '{{"{{"}}.Names{{"}}"}}: {{"{{"}}.Status{{"}}"}}'
+      register: blackbox_status
+      changed_when: false
+
+    - name: Show Blackbox container status
+      debug:
+        msg: "{{ blackbox_status.stdout_lines }}"
